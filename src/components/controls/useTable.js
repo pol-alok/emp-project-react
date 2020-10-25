@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function useTables(records, headCells) {
+export default function useTables(records, headCells, filterFn) {
   const classes = useStyles();
   const pages = [5, 10, 15];
   const [page, setPage] = useState(0);
@@ -50,14 +50,18 @@ export default function useTables(records, headCells) {
             <TableCell
               key={headCell.id}
               sortDirection={orderBy === headCell.id ? order : false}>
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={() => {
-                  handleSortRequest(headCell.id);
-                }}>
-                {headCell.label}
-              </TableSortLabel>
+              {headCell.disableSorting ? (
+                headCell.label
+              ) : (
+                <TableSortLabel
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : 'asc'}
+                  onClick={() => {
+                    handleSortRequest(headCell.id);
+                  }}>
+                  {headCell.label}
+                </TableSortLabel>
+              )}
             </TableCell>
           ))}
         </TableRow>
@@ -110,10 +114,10 @@ export default function useTables(records, headCells) {
   }
 
   const recordAfterPagingAndSorting = () => {
-    return stableSort(records, getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage,
-    );
+    return stableSort(
+      filterFn.fn(records),
+      getComparator(order, orderBy),
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
   return {
     TblContainer,

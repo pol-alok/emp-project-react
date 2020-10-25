@@ -3,33 +3,33 @@ import {
   CssBaseline,
   makeStyles,
   ThemeProvider,
-} from "@material-ui/core";
-import React from "react";
-import Header from "../components/Header";
-import SideMenu from "../components/SideMenu";
-import "./App.css";
-import Employees from "../pages/employees/Employees";
+} from '@material-ui/core';
+import React from 'react';
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
+import './App.css';
+import Employees from '../pages/employees/Employees';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#333996",
-      light: "#3C44B126",
+      main: '#333996',
+      light: '#3C44B126',
     },
     secondary: {
-      main: "#F83245",
-      light: "#F8324526",
+      main: '#F83245',
+      light: '#F8324526',
     },
     background: {
-      default: "#F4F5FD",
+      default: '#F4F5FD',
     },
   },
 });
 
 const useStyles = makeStyles({
   appMain: {
-    paddingLeft: "320px",
-    width: "100%",
+    paddingLeft: '320px',
+    width: '100%',
   },
 });
 

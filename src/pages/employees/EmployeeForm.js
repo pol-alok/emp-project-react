@@ -22,7 +22,8 @@ const initialFValues = {
   isPermanent: false,
 };
 
-export default function EmployeeForm() {
+export default function EmployeeForm(props) {
+  const { addOrEdit, recordForEdit } = props;
   const validate = (fieldvalues = values) => {
     let errorMessages = { ...errors };
     if ('fullName' in fieldvalues)
@@ -57,10 +58,17 @@ export default function EmployeeForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      employeeService.insertEmployee(values);
-      resetForm();
+      addOrEdit(values, resetForm);
     }
   };
+
+  useEffect(() => {
+    if (recordForEdit != null) {
+      setValues({
+        ...recordForEdit,
+      });
+    }
+  }, [recordForEdit]);
   return (
     <Form onSubmit={handleSubmit}>
       <Grid container>
